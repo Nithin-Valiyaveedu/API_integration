@@ -1,0 +1,201 @@
+
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!doctype html>
+<html>
+<head>
+<title>Digital Green Dashboard</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Trendy Graphs and Charts Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<script src="js/jquery-latest.min.js"></script>
+<link rel='stylesheet' href='css/jquery.circliful.css'>
+<script src='js/jquery.circliful.min.js'></script>
+<!-- font-awesome icons -->
+<script src="https://kit.fontawesome.com/358519d2f0.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="content" id="Main-Content">
+    <h1>Digtial Green Dashboard </h1>
+        <div class="top-grids">
+            <!-- customizable-grids -->
+            <div class="agile-grids">
+                <div class="row" id="hide">
+                    <div class="circle-grid" >
+                    <div id="test-circle"></div>
+                    </div>
+                    <div class="circle-grid">
+                        <div id="test-circle1"></div>
+                    </div>
+                    <div class="circle-grid">
+                        <div id="test-circle2"></div>
+                    </div>
+                        <div class="circle-grid">
+                        <div id="test-circle5"></div>
+                    </div>
+ 
+                    <div class="clear"> </div>
+                </div>
+            </div>
+        </div>
+
+    
+<!-- circliful -->
+<script src="js/jquery.circliful.js"></script>
+<script>
+
+var firstTime=0;
+var luminosity=0;
+ var soilmoisture=0;
+//setInterval(function(){ getParticleValues(); }, 3000);
+
+$( document ).ready(getParticleValues());
+    function fnloadMap() 
+        { 
+                // $("#test-circle").show();
+                // $("#test-circle1").show();
+                // $("#test-circle2").show();
+                // $("#test-circle5").show();
+                console.log("CHUMMAAAAAAA");
+    
+                $("#test-circle").circliful({
+                    animation: 1,
+                    animationStep: 5,
+                    foregroundBorderWidth: 15,
+                    backgroundBorderWidth: 15,
+                    percent: temp    ,
+                    iconColor: '#3498DB',
+                    icon: 'f2c7',
+                    iconSize: '40',
+                    iconPosition: 'middle',
+                    text: 'Temperature',          
+                    textBelow: true,
+                    replacePercentageByText: 'ºC',
+                    progressColor: {25: '#2ECC71', 50: '#FFC300', 75: '#FF5733'}
+                });
+            $("#test-circle1").circliful({
+                    animation: 1,
+                    animationStep: 5,
+                    foregroundBorderWidth: 15,
+                    backgroundBorderWidth: 15,
+                    percent: humidity,
+                    iconColor: '#3498DB',
+                    icon: 'f043',   
+                    iconSize: '30',
+                    iconPosition: 'middle',
+                    multiPercentage: 1,
+                    text: 'Humidity',            
+                    textBelow: true,
+                    decimals:2,  
+                    progressColor: {20: '#2ECC71', 40: '#ffff00', 60: '#FF5733'}
+                });
+                $("#test-circle2").circliful({
+                    animation: 1,
+                    animationStep: 5,
+                    foregroundBorderWidth: 15,
+                    backgroundBorderWidth: 15,
+                    percent: uv1,
+                    multiPercentage: 1,
+                    text: 'UV',    
+                    replacePercentageByText: '',
+                    textBelow: true,
+                    progressColor: {2: '#2ECC71', 5: '#ffff00',7:'#FFA500', 10: '#FF5733'}
+                });
+
+
+
+
+                $("#test-circle5").circliful({
+                    animation: 1,
+                    animationStep: 5,
+                    foregroundBorderWidth: 15,
+                    backgroundBorderWidth: 15,
+                    multiPercentage: 1,
+                    text: 'Soil Moisture',            
+                    textBelow: true,
+                    //percentages: [
+                    //  {'percent': 30, 'color': '#3180B8', 'title': 'Sensor 1' },
+                    //  {'percent': 50, 'color': '#4ADBEA','title': 'Sensor 2'}
+                    //],
+                    percent: moisture,
+                    decimals:2,
+                    iconColor: '#3498DB',
+                    icon: 'f2cc',
+                    iconSize: '40',
+                    iconPosition: 'middle'
+                });
+
+                //var div = ""
+
+                
+            };
+
+
+
+function getParticleValues()
+    {
+
+    $.getJSON('http://blynk-cloud.com/dHeSr2A_yh9uwwfzz8rlHhcgB1GcTygy/project', function(data) {
+console.log(data.widgets);
+       
+    //console.log(data.widgets[7].value);
+    var value = 90;
+    
+    //Soil Moisture 1
+    value =data.widgets[1].value;
+    value =value.replace('%','');
+    value =value.replace('°C','');
+    value = Math.round(value * 100) / 100
+    temp = value;
+    console.log("Temperature - " + temp);
+    //Humidity
+    value =data.widgets[0].value;
+    value =value.replace('%','');
+    value = Math.round(value * 100) / 100
+    humidity = value;
+    console.log("Humidity - " + humidity);
+    //UV
+    value =data.widgets[2].value;
+    value =value.replace('%','');
+    value = Math.round(value * 100) / 100
+    uv1 = value;
+    console.log("UV - " + uv1);
+    //Moisture
+    value =data.widgets[3].value;
+    value =value.replace('%','');
+    value = Math.round(value * 100) / 100
+    moisture = value;
+    console.log("Moisture - " + moisture);
+    fnloadMap();
+    
+    
+    });
+
+        
+    }
+
+
+
+    $(document).ready(function () {
+            console.log("ready!");
+            
+            window.setInterval(function () {
+               // getParticleValues();
+
+            }, 2000);
+            // $('#hide').remove();
+        });
+    
+        </script>
+        <!-- //circliful -->
+</div>
+
+</body>
+</html>
